@@ -5,17 +5,6 @@ const db = require('../data/db-config.js')
 //.increment('current_clients', 1)
 
 function getAllClassesPublic() { 
-//   select 
-// 	class_id, 
-// 	class_name, 
-// 	class_type, 
-// 	class_intensity_level, 
-// 	class_location, 
-// 	class_start_time, 
-// 	class_duration, 
-// 	max_class_size, 
-// 	total_clients 
-//  from classes
   return db('classes')
     .select(
       'class_id', 
@@ -30,53 +19,38 @@ function getAllClassesPublic() {
     )
 }
 
-function getAllClassesAuth(){
-//   select 
-// 	class_id, 
-// 	i.instructor_name,
-// 	class_name, 
-// 	class_type, 
-// 	class_intensity_level, 
-// 	class_location, 
-// 	class_start_time, 
-// 	class_duration, 
-// 	max_class_size, 
-// 	total_clients 
-//  from classes as c
-//  join instructors as i
-// on c.instructor_id = i.instructor_id
-  return db('classes as c')
+function getAllClassesAuth(client_id){
+  return db('reservations as r')
   .select(
-    'class_id',
-    'i.instructor_name',
-    'class_name', 
-    'class_type', 
-    'class_intensity_level', 
-    'class_location', 
-    'class_start_time', 
-    'class_duration', 
-    'max_class_size', 
-    'total_clients' ,
+    'cl.client_id',
+    'client_name',
+    'class_name',
+    'class_type',
+    'class_start_time',
+    'class_location',
+    'class_duration',
+    'i.instructor_name'
   )
+  .join('classes as c', 'c.class_id', 'r.class_id')
   .join('instructors as i', 'c.instructor_id', 'i.instructor_id')
+  .join('clients as cl','cl.client_id', 'r.client_id')
+  .where('r.client_id', client_id)
   .orderBy('class_start_time')
 }
 
-function findClassById(client_id) {
-//   select 
-// 	class_id,
-// 	class_name,
-// 	class_start_time,
-// 	class_type,
-// 	class_duration,
-// 	class_intensity_level,
-// 	class_location,
-// 	total_clients,
-// 	max_class_size
-// from classes 
-// where class_id = 3
+function findClassById(class_id) {
   return db('classes')
-  .where('class_id', client_id)
+  .select(
+    'class_name', 
+    'class_type', 
+    'class_start_time', 
+    'class_duration', 
+    'class_intensity_level', 
+    'class_location', 
+    'max_class_size'
+  )
+  .where('class_id', class_id)
+  .first()
 }
 
 function findBy(client_name){

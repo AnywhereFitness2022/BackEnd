@@ -1,7 +1,7 @@
 // const { findBy } = require('./clients-model')
 const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = require('../configs')
-const Client = require('../clients/clients-model')
+const Client = require('./clients-model')
 const db = require('../data/db-config')
 
 

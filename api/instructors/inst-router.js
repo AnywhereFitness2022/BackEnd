@@ -5,7 +5,7 @@ const Instructors = require('./inst-model')
 
 
 //[GET]/instructors/:inst_id/classes *get all classes held by one specific instructor*
-router.get('/:inst_id/classes', (req, res, next) => {
+router.get('/:inst_id/classes', (req, res, next) => { //need valid role middleware
     Instructors.getAllClasses(req.params.inst_id)
         .then(myClasses => {
             // console.log(myClasses);
@@ -14,7 +14,7 @@ router.get('/:inst_id/classes', (req, res, next) => {
         .catch(next)
 })
 
-//[GET]/instructors/:inst_id/classes/class_id *get a specific class by a specific instructor*
+//[GET]/instructors/login *login for instructors only*
 router.get('/login', (req, res, next) => {
     // res.json('hello from POST instructors login endpoint')
 })
