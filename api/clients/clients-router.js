@@ -40,7 +40,6 @@ router.post('/register', clientNameDoExist, (req, res, next) => { //need middlew
     const hash = bcrypt.hashSync(password, BCRYPT_ROUNDS)
     Clients.insertUser({client_name, password: hash})
         .then(newUser => {
-            console.log(newUser);
             res.json(newUser)
         })
         .catch(next)

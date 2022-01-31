@@ -9,9 +9,9 @@ exports.seed = function(knex) {
   return knex('instructors').del()
     .then(function () {
       return knex('instructors').insert([
-        { instructor_name: 'Peter Parker', password: password = hash, role: 'instructor' },
-        { instructor_name: 'Tony Stark', password: password = hash, role: 'instructor' },
-        { instructor_name: 'Wanda Vision', password: password = hash, role: 'instructor' },
+        { instructor_name: 'PeterParker', password: password = hash, role: 'instructor' },
+        { instructor_name: 'TonyStark', password: password = hash, role: 'instructor' },
+        { instructor_name: 'WandaVision', password: password = hash, role: 'instructor' },
         
       ]);
     });

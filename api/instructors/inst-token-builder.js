@@ -5,7 +5,7 @@ function instructorTokenBuilder(inst){
     const payload ={
         subject: inst.instructor_id,
         name: inst.instructor_name,
-        role: inst.instructor_role,
+        role: inst.role,
     }
     const options = {
         expires: '1h'
