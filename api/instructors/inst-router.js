@@ -8,14 +8,13 @@ const Instructors = require('./inst-model')
 router.get('/:inst_id/classes', (req, res, next) => { //need valid role middleware
     Instructors.getAllClasses(req.params.inst_id)
         .then(myClasses => {
-            // console.log(myClasses);
             res.json(myClasses)
         })
         .catch(next)
 })
 
 //[GET]/instructors/login *login for instructors only*
-router.get('/login', (req, res, next) => {
+router.post('/login', (req, res, next) => {
     // res.json('hello from POST instructors login endpoint')
 })
 
