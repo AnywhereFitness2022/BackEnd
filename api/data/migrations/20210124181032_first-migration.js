@@ -3,14 +3,14 @@ exports.up = async (knex) => {
   await knex.schema
     .createTable('clients', (tbl) => {
       tbl.increments('client_id')
-      tbl.string('client_name', 128).notNullable()
+      tbl.string('username', 128).notNullable()
       tbl.string('password', 128).notNullable()
       tbl.string('role', 6).defaultTo('client')
       tbl.timestamps(false, true)
     })
     .createTable('instructors', tbl => {
         tbl.increments('instructor_id')
-        tbl.string('instructor_name', 128).notNullable()
+        tbl.string('username', 128).notNullable()
         tbl.string('role', 10).defaultTo('instructor')
         tbl.string('password').notNullable()
     })

@@ -6,15 +6,14 @@ const Client = require('./clients-model')
 
 
 const checkClientNameValid = async (req, res, next) => {
-    Client.findBy(req.body.client_name)
+    Client.findBy(req.body.username)
     .then(clientAccountData => {
         if(clientAccountData) { 
             req.clientAccountData = clientAccountData
             next()
         } else {
             next({
-                status: 404, 
-                message: 'Invalid credentials'
+                message: 'Please provide correct username and password'
             })
         }
     })
@@ -25,14 +24,14 @@ const checkClientNameValid = async (req, res, next) => {
 }
 
 const clientNameDoExist = (req, res, next) => {
-    Client.findBy(req.body.client_name)
+    Client.findBy(req.body.username)
         .then(client => {
             if(!client) {
                 next()
             } else {
                 next({
                     status: 422,
-                    message: `Client name ${client.client_name} already exists. Please provide another client name`
+                    message: `Username ${client.username} already exists. Please provide another client name`
                 })
             }
         })
@@ -41,7 +40,6 @@ const clientNameDoExist = (req, res, next) => {
 
 const restrictedForClients = (req, res, next) => {
     const token = req.headers.authorization
-    
     if(!token) {
         next({
             status: 401,

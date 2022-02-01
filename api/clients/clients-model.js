@@ -23,13 +23,12 @@ function getAllClassesAuth(client_id){
   return db('reservations as r')
   .select(
     'cl.client_id',
-    'client_name',
+    'cl.username',
     'class_name',
     'class_type',
     'class_start_time',
     'class_location',
     'class_duration',
-    'i.instructor_name'
   )
   .join('classes as c', 'c.class_id', 'r.class_id')
   .join('instructors as i', 'c.instructor_id', 'i.instructor_id')
@@ -53,18 +52,18 @@ function findClassById(class_id) {
   .first()
 }
 
-function findBy(client_name){
+function findBy(user){
   // select * from clients where client_id = client_id;
   return db('clients')
-    .select('client_id', 'client_name', 'role', 'password')
-    .where('client_name', client_name)
+    .select('client_id', 'username', 'role', 'password')
+    .where('username', user)
     .first()
 }
 
 async function insertUser(user) {
   // WITH POSTGRES WE CAN PASS A "RETURNING ARRAY" AS 2ND ARGUMENT TO knex.insert/update
   // AND OBTAIN WHATEVER COLUMNS WE NEED FROM THE NEWLY CREATED/UPDATED RECORD
-  const [newUserObject] = await db('clients').insert(user, ['client_id', 'client_name', 'password', 'role'])
+  const [newUserObject] = await db('clients').insert(user, ['client_id', 'username', 'password', 'role'])
   return newUserObject
 }
 

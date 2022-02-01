@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken')
 // const {} = require('./inst-model')
 const { JWT_SECRET } = require('../configs')
+const Instructors = require('./inst-model')
+const instructorTokenBuilder = require('./inst-token-builder')
 
 
 const restricted = (req, res, next) => {
@@ -18,7 +20,7 @@ const restricted = (req, res, next) => {
                     message: 'Token invalid!'
                 })
             } else {
-                req.decoded = decoded
+                req.decodedJWT = decoded
                 next()
             }
         })
@@ -26,28 +28,34 @@ const restricted = (req, res, next) => {
 }
 
 const onlyInstructors = (req, res, next) => {
-    console.log(req.decoded);
-    if(req.decoded.role === 'instructor'){
-        next()
-    } else {
-        next({
-            status: 403,
-            message: 'Only instructors are allowed here'
-        })
-    }
+    // console.log('before req.clientAccountData.password', req.clientAccountData.role);
+    // if(req.clientAccountData.role === 'instructor'){
+    //     next()
+    // } else {
+    //     next({
+    //         status: 403,
+    //         message: 'Only instructors are allowed here'
+    //     })
+    // }
 }
 
-const checkIfInstructorIsValid = (req, res, next) => {
-    // next({
-    //     message: 'you are in the check if instructor name is valid'
-    // })
-    const { instructor_name } = req.body
-    
-        
+const checkInstructorValid = (req, res, next) => {
+    console.log('req.body before', req.body);
+    const { username } = req.body
+    console.log('what username is', username);
+    Instructors.findBy(username)
+        .then(something => {
+            console.log('what then responses', something);
+            next()
+        })
+        .catch(err => {
+            console.log(err)
+            next(err)
+        })
 }
 
 module.exports = {
     onlyInstructors,
-    checkIfInstructorIsValid,
+    checkInstructorValid,
     restricted
 }

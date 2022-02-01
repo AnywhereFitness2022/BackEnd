@@ -30,13 +30,10 @@ function findClassById(inst_id, client_id){
 }
 
 function findBy(inst_name){
-//     select instructor_id, instructor_name, 
-// role from instructors 
-// where instructor_name = instructor_name
     return db('instructors')
-        .select('instructor_id', 'instructor_name', 'role')
+        .select('instructor_name', 'role', 'password')
         .where('instructor_name', inst_name)
-
+        .first()
 }
 
 module.exports = {
