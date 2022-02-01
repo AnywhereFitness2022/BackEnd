@@ -53,7 +53,6 @@ function findClassById(class_id) {
 }
 
 function findBy(user){
-  // select * from clients where client_id = client_id;
   return db('clients')
     .select('client_id', 'username', 'role', 'password')
     .where('username', user)

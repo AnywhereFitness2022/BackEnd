@@ -40,6 +40,7 @@ const clientNameDoExist = (req, res, next) => {
 
 const restrictedForClients = (req, res, next) => {
     const token = req.headers.authorization
+    
     if(!token) {
         next({
             status: 401,

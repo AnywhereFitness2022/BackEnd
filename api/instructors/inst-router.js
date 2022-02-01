@@ -19,8 +19,23 @@ router.get('/:inst_id/classes',
 
 //[GET]/instructors/login *login for instructors only*
 router.post('/login', checkInstructorValid, (req, res, next) => {
-    res.json('hello from login instructors endpoint')
+    const { password } = req.body
+    if(bcrypt.compareSync(password, req.instructorAccountData.password)) {
+        const token = makeToken(req.instructorAccountData)
+            res.json({
+                message: `Welcome ${req.instructorAccountData.username}! Let's change fitness!`, 
+                token
+            })
+    } else {
+        next({
+            message: 'Invalid credentials'
+        })
+    }
+
     next()
 })
 
+//need update
+//need create new class
+//need delete
 module.exports = router;

@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken')
-// const {} = require('./inst-model')
 const { JWT_SECRET } = require('../configs')
 const Instructors = require('./inst-model')
 const instructorTokenBuilder = require('./inst-token-builder')
+const db = require('../data/db-config')
 
 
 const restricted = (req, res, next) => {
@@ -39,17 +39,19 @@ const onlyInstructors = (req, res, next) => {
     // }
 }
 
-const checkInstructorValid = (req, res, next) => {
-    console.log('req.body before', req.body);
-    const { username } = req.body
-    console.log('what username is', username);
-    Instructors.findBy(username)
-        .then(something => {
-            console.log('what then responses', something);
-            next()
+const checkInstructorValid = async (req, res, next) => {
+    Instructors.findBy(req.body.username)
+        .then(instructorAccountData => {
+            if(instructorAccountData) {
+                req.instructorAccountData = instructorAccountData
+                next()
+            } else {
+                next({
+                    message: 'Please provide correct username and password'
+                })
+            }
         })
         .catch(err => {
-            console.log(err)
             next(err)
         })
 }

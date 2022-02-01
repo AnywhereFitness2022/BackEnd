@@ -8,7 +8,7 @@ function instructorTokenBuilder(inst){
         role_name: inst.role,
     }
     const options = {
-        expires: '1h'
+        expiresIn: '1h'
     }
     const token = jwt.sign(payload, JWT_SECRET, options)
     return token

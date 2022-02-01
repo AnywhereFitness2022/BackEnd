@@ -9,7 +9,7 @@ const db = require('../data/db-config')
 function getAllClasses(inst_id){
     return db('classes as c')
         .select(
-            'i.instructor_name',
+            'username',
             'class_id',
             'class_name',
             'class_type',
@@ -29,10 +29,10 @@ function findClassById(inst_id, client_id){
     return db('classes') //still working
 }
 
-function findBy(inst_name){
+function findBy(user){
     return db('instructors')
-        .select('instructor_name', 'role', 'password')
-        .where('instructor_name', inst_name)
+        .select('instructor_id', 'username', 'role', 'password')
+        .where('username', user)
         .first()
 }
 

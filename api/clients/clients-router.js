@@ -10,7 +10,7 @@ const { checkClientNameValid, clientNameDoExist, restrictedForClients }  = requi
 router.get('/public/classes', (req, res, next) => {
     Clients.getAllClassesPublic()
         .then(allPublicClasses => {
-            res.status(200).json(allPublicClasses)
+            res.json(allPublicClasses)
         })
         .catch(next)
 })
@@ -52,16 +52,16 @@ router.post('/login', checkClientNameValid, (req, res, next) => {
     if(bcrypt.compareSync(password, req.clientAccountData.password)) {
         const token = clientTokenBuilder(req.clientAccountData)
             res.json({
-                status: 201,
                 message: `Welcome ${req.clientAccountData.username}! Let's Fitness!`, 
                 token
             })
     } else {
         next({
-            status: 401,
             message: 'Invalid credentials'
         })
     }
 })
+
+//need a delete
 
 module.exports = router;
