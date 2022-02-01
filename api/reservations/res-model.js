@@ -2,7 +2,15 @@ const db = require('../data/db-config')
 
 async function addReservations(class_id, client_id) {
     // insert into reservations (class_id, client_id) values ('2', '3');
-    
+    const newRes = {class_id, client_id}
+    const [returnedNewRes] = await db('reservations')
+        .insert(
+            returnedNewRes,
+            ['reservations_id', 'client_id']
+        )
+
+        console.log(returnedNewRes);
+        return 'trying to add shit'
 }
 
 function getAllReservations(client_id){

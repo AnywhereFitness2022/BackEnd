@@ -46,14 +46,15 @@ const restrictedForClients = (req, res, next) => {
             message: 'Token required!'
         })
     } else {
-        jwt.verify(token, JWT_SECRET, (err, decoded) => {
+        jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
+            console.log('decoded token', decodedToken);
             if (err) {
                 next({
                     status: 401, 
                     message: 'Invalid token!'
                 })
             } else {
-                req.decoded = decoded
+                req.decodedToken = decodedToken
                 next()
             }
         })

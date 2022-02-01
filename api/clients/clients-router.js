@@ -48,7 +48,6 @@ router.post('/register', clientNameDoExist, (req, res, next) => { //need middlew
 //[POST]/clients/login *registered users only can log in*
 router.post('/login', checkClientNameValid, (req, res, next) => {
     const { password } = req.body
-    
     if(bcrypt.compareSync(password, req.clientAccountData.password)) {
         const token = clientTokenBuilder(req.clientAccountData)
             res.json({
