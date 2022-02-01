@@ -7,8 +7,8 @@ async function addReservations(class_id, client_id) {
         .insert(
             returnedNewRes,
             ['reservations_id', 'client_id']
-        )
-
+        ) //returns columns reservations_id & client_id from resrevations table
+            // needs client_id from decodedToken which can be called in the router somehow
         console.log(returnedNewRes);
         return 'trying to add shit'
 }
