@@ -26,7 +26,7 @@ router.get('/public/classes/:class_id', (req, res, next) => {
 
 //[GET]/clients/class *restricted - get all classes that clients registered for *
 //find that one project where it shows a another object with classes?
-router.get('/:client_id/classes', restrictedForClients, (req, res, next) => { 
+router.get('/classes/:client_id', restrictedForClients, (req, res, next) => { 
     Clients.getAllClassesAuth(req.params.client_id)
         .then(allAuthClasses => {
             res.status(200).json(allAuthClasses)

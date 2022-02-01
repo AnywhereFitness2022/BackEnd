@@ -6,7 +6,7 @@ const makeToken = require('./inst-token-builder')
 
 
 //[GET]/instructors/:inst_id/classes *get all classes held by one specific instructor*
-router.get('/:inst_id/classes', 
+router.get('/classes/:inst_id', 
     restricted,
     (req, res, next) => { 
         Instructors.getAllClasses(req.params.inst_id)
