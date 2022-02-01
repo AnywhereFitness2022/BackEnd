@@ -4,8 +4,8 @@ const { JWT_SECRET } = require('../configs/index');
 function clientTokenBuilder(client){
     const payload = {
         subject: client.client_id,
-        name: client.client_name,
-        role: client.role,
+        username: client.client_name,
+        role_name: client.role,
     }
     const options = {
         expiresIn: '1h'

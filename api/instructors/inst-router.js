@@ -7,22 +7,22 @@ const { onlyInstructors, restricted } = require('./inst-middleware')
 
 
 //[GET]/instructors/:inst_id/classes *get all classes held by one specific instructor*
-router.get('/:inst_id/classes', restricted, (req, res, next) => { //need valid role middleware
-    Instructors.getAllClasses(req.params.inst_id)
-        .then(myClasses => {
-            res.json(myClasses)
-        })
-        .catch(next)
-})
-
-router.post('/register', (req, res, next) => { //dont think i need this
-    res.json('hello from POST instructors register login')
+router.get('/:inst_id/classes', 
+    restricted, 
+    onlyInstructors,
+    (req, res, next) => { 
+        Instructors.getAllClasses(req.params.inst_id)
+            .then(myClasses => {
+                res.json(myClasses)
+            })
+            .catch(next)
 })
 
 //[GET]/instructors/login *login for instructors only*
 router.post('/login', onlyInstructors, (req, res, next) => {
-    res.json('hello from POST instructors login endpoint')
+    // res.json('hello from POST instructors login endpoint')
     // const { password } = req.body
+    Instructors.findBy()
 })
 
 module.exports = router;

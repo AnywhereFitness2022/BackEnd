@@ -2,41 +2,26 @@
 const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = require('../configs')
 const Client = require('./clients-model')
-const db = require('../data/db-config')
+// const db = require('../data/db-config')
 
 
 const checkClientNameValid = async (req, res, next) => {
-    const client_name = req.body.client_name
-    
-    try{
-        const client = await db('clients').where('client_name', client_name).first()
-        if(client) {
-            req.client = client
+    Client.findBy(req.body.client_name)
+    .then(clientAccountData => {
+        if(clientAccountData) { 
+            req.clientAccountData = clientAccountData
             next()
         } else {
             next({
-                status: 404,
+                status: 404, 
                 message: 'Invalid credentials'
             })
         }
-    } catch(err) {
+    })
+    .catch(err => {
+        console.log(err);
         next(err)
-    }
-    // console.log(req.body.client_name);
-    // Client.findBy(req.body.client_name)
-    // .then(clientNameValid => {
-    //     if(clientNameValid) { 
-    //         req.clients = clientNameValid
-    //         next()
-    //         console.log(clientNameValid);
-    //     } else {
-    //         next({
-    //             status: 404, 
-    //             message: 'Invalid credentials'
-    //         })
-    //     }
-    // })
-    // .catch(next)
+    })
 }
 
 const clientNameDoExist = (req, res, next) => {

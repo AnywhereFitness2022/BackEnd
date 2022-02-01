@@ -56,7 +56,7 @@ function findClassById(class_id) {
 function findBy(client_name){
   // select * from clients where client_id = client_id;
   return db('clients')
-    .select('client_id', 'client_name', 'role')
+    .select('client_id', 'client_name', 'role', 'password')
     .where('client_name', client_name)
     .first()
 }
@@ -65,7 +65,7 @@ async function insertUser(user) {
   // WITH POSTGRES WE CAN PASS A "RETURNING ARRAY" AS 2ND ARGUMENT TO knex.insert/update
   // AND OBTAIN WHATEVER COLUMNS WE NEED FROM THE NEWLY CREATED/UPDATED RECORD
   const [newUserObject] = await db('clients').insert(user, ['client_id', 'client_name', 'password', 'role'])
-  return newUserObject // { user_id: 7, username: 'foo', password: 'xxxxxxx' }
+  return newUserObject
 }
 
 module.exports = {

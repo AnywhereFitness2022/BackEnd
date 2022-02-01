@@ -25,9 +25,9 @@ const restricted = (req, res, next) => {
     }
 }
 
-const onlyInstructors = role_name => (req, res, next) => {
-    if(req.decoded.role === role_name){
-        console.log(req.decoded.role);
+const onlyInstructors = (req, res, next) => {
+    console.log(req.decoded);
+    if(req.decoded.role === 'instructor'){
         next()
     } else {
         next({
@@ -38,9 +38,12 @@ const onlyInstructors = role_name => (req, res, next) => {
 }
 
 const checkIfInstructorIsValid = (req, res, next) => {
-    next({
-        message: 'you are in the check if instructor name is valid'
-    })
+    // next({
+    //     message: 'you are in the check if instructor name is valid'
+    // })
+    const { instructor_name } = req.body
+    
+        
 }
 
 module.exports = {

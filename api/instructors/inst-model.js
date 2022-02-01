@@ -29,7 +29,18 @@ function findClassById(inst_id, client_id){
     return db('classes') //still working
 }
 
+function findBy(inst_name){
+//     select instructor_id, instructor_name, 
+// role from instructors 
+// where instructor_name = instructor_name
+    return db('instructors')
+        .select('instructor_id', 'instructor_name', 'role')
+        .where('instructor_name', inst_name)
+
+}
+
 module.exports = {
     getAllClasses,
-    findClassById
+    findClassById,
+    findBy,
 }

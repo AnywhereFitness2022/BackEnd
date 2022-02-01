@@ -14,6 +14,7 @@ server.use('/api/clients', clientRouters)
 server.use('/api/instructors', instructorRouters)
 
 server.use((err, req, res, next) => {
+    console.log(err);
     res.status(err.status || 500).json({
         message: err.message,
         stack: err.stack
