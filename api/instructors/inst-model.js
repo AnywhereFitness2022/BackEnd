@@ -25,10 +25,6 @@ function getAllClasses(inst_id){
         .orderBy('class_start_time')
 }
 
-function findClassById(inst_id, client_id){
-    return db('classes') //still working
-}
-
 function findBy(user){
     return db('instructors')
         .select('instructor_id', 'username', 'role', 'password')
@@ -36,8 +32,27 @@ function findBy(user){
         .first()
 }
 
+async function createClass(newClass){
+    const [newlyCreatedClass] = await db('classes').insert(newClass, [
+        'class_name',
+        'class_start_time',
+        'class_type',
+        'class_duration',
+        'class_intensity_level',
+        'class_location',
+        'max_class_size',
+        'instructor_id'
+    ])
+    return newlyCreatedClass
+}
+
+async function deleteClass(class_id){
+    return db('classes').where('class_id', class_id).del()
+}
+
 module.exports = {
     getAllClasses,
-    findClassById,
     findBy,
+    createClass,
+    deleteClass
 }

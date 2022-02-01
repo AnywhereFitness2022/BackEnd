@@ -5,7 +5,6 @@ const { restricted, checkInstructorValid } = require('./inst-middleware')
 const makeToken = require('./inst-token-builder')
 
 
-
 //[GET]/instructors/:inst_id/classes *get all classes held by one specific instructor*
 router.get('/:inst_id/classes', 
     restricted,
@@ -35,7 +34,24 @@ router.post('/login', checkInstructorValid, (req, res, next) => {
     next()
 })
 
-//need update
-//need create new class
-//need delete
+//[POST]/:inst_id/create *restricted for instructors to create new class*
+router.post('/create', restricted, (req, res, next) => { //need restricted middleware
+    Instructors.createClass(req.body)
+        .then(newClass => {
+            res.json(newClass)
+        })
+        .catch(next)
+})
+
+//[DELETE]/delete/class_id *restricted for instructors to delete a class*
+router.delete('/delete/:class_id', restricted, (req, res, next) => {
+    Instructors.deleteClass(req.params.class_id)
+        .then(deleted => {
+            res.json({
+                message: 'Class was successfully deleted'
+            })
+        })
+        .catch(next)
+})
+
 module.exports = router;
