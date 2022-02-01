@@ -1,8 +1,8 @@
 const db = require('../data/db-config')
 
-function addReservations(client_id) {
+async function addReservations(class_id, client_id) {
     // insert into reservations (class_id, client_id) values ('2', '3');
-    return db('reservations').insert('class_id', client_id)
+    
 }
 
 function getAllReservations(client_id){
