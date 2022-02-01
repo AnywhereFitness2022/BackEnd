@@ -15,21 +15,11 @@ router.get('/public/classes', (req, res, next) => {
         .catch(next)
 })
 
-//[GET]/clients/classes/:client_id *public access to each individual classes by id*
+//[GET]/clients/classes/:client_id *to each individual classes by id* 
 router.get('/public/classes/:class_id', (req, res, next) => { 
     Clients.findClassById(req.params.class_id)
         .then(classes => {
             res.json(classes)
-        })
-        .catch(next)
-})
-
-//[GET]/clients/class *restricted - get all classes that clients registered for *
-//find that one project where it shows a another object with classes?
-router.get('/classes/:client_id', restrictedForClients, (req, res, next) => { 
-    Clients.getAllClassesAuth(req.params.client_id)
-        .then(allAuthClasses => {
-            res.status(200).json(allAuthClasses)
         })
         .catch(next)
 })
