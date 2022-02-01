@@ -1,9 +1,6 @@
 const db = require('../data/db-config')
 
 
-// const updatedClassSize = await  db('classes')
-//.where('class_id', client.class_id)
-//.increment('current_clients', 1)
 
 
 function getAllClasses(inst_id){
