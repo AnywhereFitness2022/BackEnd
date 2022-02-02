@@ -3,6 +3,7 @@ const db = require('../data/db-config')
 function getAllClasses(inst_id){
     return db('classes as c')
         .select(
+            'i.instructor_id',
             'username',
             'class_id',
             'class_name',
@@ -19,6 +20,14 @@ function getAllClasses(inst_id){
         .orderBy('class_start_time')
 }
 
+async function getClass(inst_id, class_id){
+    const allClasses = await getAllClasses(inst_id)
+    const oneClass = allClasses.filter(eachClass => {
+        return eachClass.class_id === parseInt(class_id)
+    })
+    return oneClass[0]
+}
+
 function findBy(user){
     return db('instructors')
         .select('instructor_id', 'username', 'role', 'password')
@@ -28,6 +37,7 @@ function findBy(user){
 
 async function createClass(newClass){
     const [newlyCreatedClass] = await db('classes').insert(newClass, [
+        'class_id',
         'class_name',
         'class_start_time',
         'class_type',
@@ -44,9 +54,16 @@ async function deleteClass(class_id){
     return db('classes').where('class_id', class_id).del()
 }
 
+async function updateClass(class_id, body){
+    await db('classes').update(body).where('class_id', class_id)
+    return getClass(body.instructor_id, )
+}
+
 module.exports = {
     getAllClasses,
     findBy,
     createClass,
-    deleteClass
+    deleteClass,
+    updateClass,
+    getClass
 }

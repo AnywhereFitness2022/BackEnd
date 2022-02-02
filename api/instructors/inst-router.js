@@ -50,7 +50,21 @@ router.post('/create',
             .catch(next)
 })
 
-//[PUT] /
+//[PUT] /:inst_id/update/:class_id *restricted for instructors to update/modify classes*
+router.put('/:inst_id/update/:class_id', (req, res, next) => {
+    // res.json({ 
+    //     message: 'class was updated'
+    // })
+
+    Instructors.updateClass(req.params.class_id, req.body)
+        .then(updatedClass => {
+            // console.log('what is updatedClass', updatedClass);
+            res.json({
+                message: 'Class was successfully updated!'
+            })
+        })
+        .catch(next)
+})
 
 //[DELETE] /delete/class_id *restricted for instructors to delete a class*
 router.delete('/delete/:class_id', 
