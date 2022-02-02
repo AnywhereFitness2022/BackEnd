@@ -7,12 +7,12 @@
     "migrate:dev": "knex migrate:latest",
     "rollback:dev": "knex migrate:rollback",
     "seed:dev": "knex seed:run",
-    "migrate:prod": "heroku run knex migrate:latest -a anywhere-fitness-04",
-    "rollback:prod": "heroku run knex migrate:rollback -a anywhere-fitness-04",
-    "database:prod": "heroku pg:psql -a anywhere-fitness-04",
-    "seed:prod": "heroku run knex seed:run -a anywhere-fitness-04",
+    "migrate:prod": "heroku run knex migrate:latest -a anywhere-fitness-buildweek",
+    "rollback:prod": "heroku run knex migrate:rollback -a anywhere-fitness-buildweek",
+    "database:prod": "heroku pg:psql -a anywhere-fitness-buildweek",
+    "seed:prod": "heroku run knex seed:run -a anywhere-fitness-buildweek",
     "test": "cross-env NODE_ENV=testing jest --verbose --runInBand",
-    "deploy": "git push heroku master"
+    "deploy": "git push heroku main"
   },
   "engines": {
     "node": "16.13.2"
