@@ -37,17 +37,7 @@ async function getAllReservations(client_id){
   return await db('reservations as r')
       .join('classes as c', 'r.class_id', 'c.class_id')
       .join('clients as cl', 'r.client_id', 'cl.client_id')
-      .select(
-          'reservations_id',
-          'cl.username',
-          'class_name',
-          'c.class_id',
-          'class_type',
-          'class_start_time',
-          'class_duration',
-          'class_intensity_level',
-          'class_location'
-      )
+      .select()
       .where('cl.client_id ', client_id)
       .orderBy('class_start_time')
 }
@@ -83,26 +73,24 @@ async function addReservations(client_id, class_id) {
 
 async function getReservedClass(client_id, class_id){
   const allClasses = await getAllReservations(client_id)
-  console.log('get all classes', allClasses);
+  // console.log('get all classes', allClasses); returns an array
   const oneClass = allClasses.filter(eachClass => {
-    console.log('after filtering', eachClass);
+    // console.log('after filtering', eachClass); returns an object
     return eachClass.class_id === parseInt(class_id)
-
   })
-  
   return oneClass[0];
   
 }
 
-async function removeReservation(client_id,class_id){
-  const whatWeNeedToDelete = await getReservedClass(client_id, class_id)
-  console.log('suppose to be what?', whatWeNeedToDelete);
+async function removeReservation(client_id, class_id){
+  const toDelete = await getReservedClass(client_id, class_id)
+  console.log('supposed to be what?', toDelete);
     await db('classes')
       .where('class_id', class_id)
-      .update('total_clients', whatWeNeedToDelete.total_clients -1)
+      .update('total_clients', toDelete.total_clients - 1)
       
     return db('reservations')
-      .where('reservations_id', whatWeNeedToDelete.reservations_id)
+      .where('reservations_id', toDelete.reservations_id)
       .del()
   
 }

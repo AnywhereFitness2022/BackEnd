@@ -3,7 +3,12 @@ const bcrypt = require('bcryptjs')
 const Clients = require('./clients-model')
 const clientTokenBuilder = require('./clients-token-builder')
 const { BCRYPT_ROUNDS } = require('../configs')
-const { checkClientNameValid, clientNameDoExist, restrictedForClients }  = require('./clients-middleware')
+const { 
+    checkClientNameValid, 
+    clientNameDoExist, 
+    restrictedForClients 
+}  = require('./clients-middleware')
+const { checkClassFull } = require('../reservations/res-middleware')
 
 //[GET] / *restricted get all classes*
 router.get('/', restrictedForClients, (req, res, next) => {
@@ -61,7 +66,7 @@ router.post('/login', checkClientNameValid, (req, res, next) => {
 })
 
 //[POST] /add/:class_id *restricted for clients to add a class*
-router.post('/add/:class_id', restrictedForClients, (req, res, next) => {
+router.post('/add/:class_id', restrictedForClients, checkClassFull, (req, res, next) => {
     const client_id = req.decodedToken.client_id;
     const class_id = req.params.class_id
     
