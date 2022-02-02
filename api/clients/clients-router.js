@@ -11,11 +11,20 @@ const {
 }  = require('./clients-middleware')
 const { checkClassFull } = require('../reservations/res-middleware')
 
-//[GET] / *restricted get all classes*
-router.get('/', restrictedForClients, clientRoleOnly('client'), (req, res, next) => {
+//[GET] /classes *public access*
+router.get('/classes/public', (req, res, next) => {
     Clients.getAllClasses()
         .then(allPublicClasses => {
             res.json(allPublicClasses)
+        })
+        .catch(next)
+})
+
+//[GET] / *restricted get all classes*
+router.get('/class', restrictedForClients, clientRoleOnly('client'), (req, res, next) => {
+    Clients.getAllClasses()
+        .then(allClasses => {
+            res.json(allClasses)
         })
         .catch(next)
 })
