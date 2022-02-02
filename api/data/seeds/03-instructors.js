@@ -1,17 +1,10 @@
-const bcrypt = require('bcryptjs')
-const { SEED_PASSWORD } = process.env
-
-let password = '';
-
-const hash = bcrypt.hashSync(SEED_PASSWORD, 8)
-
 exports.seed = function(knex) {
   return knex('instructors').del()
     .then(function () {
       return knex('instructors').insert([
-        { username: 'PeterParker', password: password = hash, role: 'instructor' },
-        { username: 'TonyStark', password: password = hash, role: 'instructor' },
-        { username: 'WandaVision', password: password = hash, role: 'instructor' },
+        { username: 'PeterParker', password: '$2a$08$YPqrdlLzJZ1A1R2vr9le/ecdhRy5SF1UHRAgf73Ky.0DBwlOlU8L.', role: 'instructor' }, //password: 1234
+        { username: 'TonyStark', password: '$2a$08$YPqrdlLzJZ1A1R2vr9le/ecdhRy5SF1UHRAgf73Ky.0DBwlOlU8L.', role: 'instructor' }, //password: 1234
+        { username: 'WandaVision', password: '$2a$08$YPqrdlLzJZ1A1R2vr9le/ecdhRy5SF1UHRAgf73Ky.0DBwlOlU8L.', role: 'instructor' }, //password: 1234
         
       ]);
     });

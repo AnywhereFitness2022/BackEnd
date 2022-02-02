@@ -2,7 +2,7 @@ const router = require('express').Router()
 const bcrypt = require('bcryptjs')
 const Clients = require('./clients-model')
 const clientTokenBuilder = require('./clients-token-builder')
-const { BCRYPT_ROUNDS } = require('../configs')
+const { BCRYPT_ROUNDS } = require('../secrets')
 const { 
     checkClientNameValid, 
     clientNameDoExist, 
@@ -42,7 +42,7 @@ router.get('/:client_id/classes', restrictedForClients, clientRoleOnly('client')
 //[POST] /clients/register *register new clients*
 router.post('/register', clientNameDoExist, (req, res, next) => {
     let { username, password } = req.body
-    const hash = bcrypt.hashSync(password, BCRYPT_ROUNDS)
+    const hash = bcrypt.hashSync(password, 8)
     Clients.insertUser({username, password: hash})
         .then(newUser => {
             res.json(newUser)
