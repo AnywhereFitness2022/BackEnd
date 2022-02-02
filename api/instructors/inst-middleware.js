@@ -3,7 +3,7 @@ const { JWT_SECRET } = require('../configs')
 const Instructors = require('./inst-model')
 
 
-const restricted = (req, res, next) => {
+const restrictedForInstructors = (req, res, next) => {
     const token = req.headers.authorization
     if(!token){
         next({
@@ -43,5 +43,5 @@ const checkInstructorValid = async (req, res, next) => {
 
 module.exports = {
     checkInstructorValid,
-    restricted
+    restrictedForInstructors
 }

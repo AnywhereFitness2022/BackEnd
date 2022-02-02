@@ -5,9 +5,8 @@ const clientTokenBuilder = require('./clients-token-builder')
 const { BCRYPT_ROUNDS } = require('../configs')
 const { checkClientNameValid, clientNameDoExist, restrictedForClients }  = require('./clients-middleware')
 
-
-//[GET]/clients/public/classes *public access to all available classes*
-router.get('/public/classes', (req, res, next) => {
+//[GET] / *restricted get all classes*
+router.get('/', restrictedForClients, (req, res, next) => {
     Clients.getAllClassesPublic()
         .then(allPublicClasses => {
             res.json(allPublicClasses)
@@ -15,16 +14,26 @@ router.get('/public/classes', (req, res, next) => {
         .catch(next)
 })
 
-//[GET]/clients/classes/:client_id *to each individual classes by id* 
-router.get('/public/classes/:class_id', (req, res, next) => { 
+//[GET] /class/class_id *restricted get class by class_id*
+router.get('/class/:class_id', restrictedForClients, (req, res, next) => {
     Clients.findClassById(req.params.class_id)
-        .then(classes => {
-            res.json(classes)
+        .then(gettingClass => {
+            console.log(gettingClass);
+            res.json(gettingClass)
         })
         .catch(next)
 })
 
-//[POST]/clients/register *register new clients*
+//[GET] /:client_id/classes *restricted for clients to retrieve all reserved classes*
+router.get('/:client_id/classes', restrictedForClients, (req, res, next) => {
+    Clients.getAllReservations(req.params.client_id)
+        .then(reservations => {
+            res.json(reservations)
+        })
+        .catch(next)
+})
+
+//[POST] /clients/register *register new clients*
 router.post('/register', clientNameDoExist, (req, res, next) => { //need middlewares for validation for body
     let { username, password } = req.body
     const hash = bcrypt.hashSync(password, BCRYPT_ROUNDS)
@@ -35,7 +44,7 @@ router.post('/register', clientNameDoExist, (req, res, next) => { //need middlew
         .catch(next)
 })
 
-//[POST]/clients/login *registered users only can log in*
+//[POST] /clients/login *registered users only can log in*
 router.post('/login', checkClientNameValid, (req, res, next) => {
     const { password } = req.body
     if(bcrypt.compareSync(password, req.clientAccountData.password)) {
@@ -51,6 +60,27 @@ router.post('/login', checkClientNameValid, (req, res, next) => {
     }
 })
 
-//need a delete
+//[POST] /add/:class_id *restricted for clients to add a class*
+router.post('/add/:class_id', restrictedForClients, (req, res, next) => {
+    const client_id = req.decodedToken.client_id;
+    const class_id = req.params.class_id
+    
+    Clients.addReservations(client_id, class_id)
+        .then(reservedClass => {
+            res.json({
+                message: `You have reserved a spot for ${reservedClass.class_name}`
+            })
+        })
+        .catch(next)
+})
+
+//[DELETE] /remove/:class_id
+router.delete('/:client_id/remove/:class_id', (req, res, next) => {
+    Clients.removeReservation(req.params.class_id)
+        .then(deletedClass => {
+            res.json(deletedClass)
+        })
+        .catch(next)
+})
 
 module.exports = router;

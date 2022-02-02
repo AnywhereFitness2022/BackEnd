@@ -47,7 +47,6 @@ const restrictedForClients = (req, res, next) => {
         })
     } else {
         jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
-            console.log('decoded token', decodedToken);
             if (err) {
                 next({
                     status: 401, 
