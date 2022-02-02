@@ -68,6 +68,7 @@ Anywhere Fitness base url: [https://anywhere-fitness-buildweek.herokuapp.com/api
 }
 ```
 
+- a token will be created in a string format to will be needed
 - will return the following:
 
 ```jsx
@@ -210,6 +211,7 @@ Anywhere Fitness base url: [https://anywhere-fitness-buildweek.herokuapp.com/api
 [GET]/instructors/login
 
 - restricted endpoint for instructors only
+- use the following username and password to login as an instructor
 - Takes in req.body with the following format:
 
 ```jsx
@@ -219,6 +221,7 @@ Anywhere Fitness base url: [https://anywhere-fitness-buildweek.herokuapp.com/api
 }
 ```
 
+- a token will be created in a string format to will be needed
 - will return the following:
     
     ```jsx
