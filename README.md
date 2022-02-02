@@ -2,7 +2,7 @@ Anywhere Fitness base url: [https://anywhere-fitness-buildweek.herokuapp.com/api
 
 # Client’s (no auth needed)
 
-[GET]/classes/public
+[GET]/clients/classes/public
 
 - public access to all classes
 - Will returning the following format:
