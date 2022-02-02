@@ -111,7 +111,6 @@ async function removeReservation(client_id, class_id){
     return db('reservations')
       .where('reservations_id', toDelete.reservations_id)
       .del()
-  
 }
 
 module.exports = {
