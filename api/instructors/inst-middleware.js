@@ -41,7 +41,19 @@ const checkInstructorValid = async (req, res, next) => {
         })
 }
 
+const instructorRoleOnly = role => (req, res, next) => {
+    if(req.decodedJWT.role === role){
+        next()
+    } else {
+        res.json({
+            message: 'You do not have permission to access this'
+        })
+    }
+}
+
+
 module.exports = {
     checkInstructorValid,
-    restrictedForInstructors
+    restrictedForInstructors,
+    instructorRoleOnly
 }

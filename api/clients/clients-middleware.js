@@ -65,7 +65,7 @@ const clientRoleOnly = role => (req, res, next) => {
     } else {
         next({
             status: 401,
-            message: 'You do not have permission to access this function'
+            message: 'You do not have permission to access this'
         })
     }
 }

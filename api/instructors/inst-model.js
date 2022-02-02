@@ -1,8 +1,5 @@
 const db = require('../data/db-config')
 
-
-
-
 function getAllClasses(inst_id){
     return db('classes as c')
         .select(

@@ -3,9 +3,9 @@ const { JWT_SECRET } = require('../configs')
 
 function instructorTokenBuilder(inst){
     const payload ={
-        subject: inst.instructor_id,
+        instructor_id: inst.instructor_id,
         username: inst.instructor_name,
-        role_name: inst.role,
+        role: inst.role,
     }
     const options = {
         expiresIn: '1h'
