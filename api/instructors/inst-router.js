@@ -25,7 +25,6 @@ router.post('/login', checkInstructorValid, (req, res, next) => {
     const { password } = req.body
     if(bcrypt.compareSync(password, req.instructorAccountData.password)) {
         const token = makeToken(req.instructorAccountData)
-        console.log(req.instructorAccountData);
             res.json({
                 instructor_id: `${req.instructorAccountData.instructor_id}`,
                 message: `Welcome ${req.instructorAccountData.username}! Let's change fitness!`, 
