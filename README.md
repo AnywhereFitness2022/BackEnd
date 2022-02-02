@@ -48,6 +48,7 @@ Anywhere Fitness base url: [https://anywhere-fitness-buildweek.herokuapp.com/api
 ```
 
 - username & password must be all strings
+- username must be unique 
 - will return the following:
 
 ```jsx
