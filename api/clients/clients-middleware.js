@@ -3,7 +3,6 @@ const { JWT_SECRET } = require('../configs')
 const Client = require('./clients-model')
 
 
-
 const checkClientNameValid = async (req, res, next) => {
     Client.findBy(req.body.username)
     .then(clientAccountData => {
@@ -12,7 +11,7 @@ const checkClientNameValid = async (req, res, next) => {
             next()
         } else {
             next({
-                message: 'Please provide correct username and password'
+                message: 'Please provide correct credentials'
             })
         }
     })
@@ -59,9 +58,21 @@ const restrictedForClients = (req, res, next) => {
     }
 }
 
+const clientRoleOnly = role => (req, res, next) => {
+    // console.log('what is decoded token', req.decodedToken);
+    if(req.decodedToken.role === role){
+        next()
+    } else {
+        next({
+            status: 401,
+            message: 'You do not have permission to access this function'
+        })
+    }
+}
+
 module.exports = {
     checkClientNameValid,
     clientNameDoExist,
-    restrictedForClients
-    
+    restrictedForClients,
+    clientRoleOnly,
 }

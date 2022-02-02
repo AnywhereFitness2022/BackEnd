@@ -1,4 +1,3 @@
-// const Reservations = require('./res-model')
 const db = require('../data/db-config')
 
 async function checkClassFull(req, res, next){
@@ -7,6 +6,8 @@ async function checkClassFull(req, res, next){
     //select * from classes where class_id = 4;
     const reservingClass = await db('classes')
         .where('class_id', class_id).first()
+        // console.log('what is reservingClass', reservingClass);
+        //returns an object of class info
     if(reservingClass.total_clients >= reservingClass.max_class_size){
         next({
             message: `Sorry, ${reservingClass.class_name} is full. Please reserve a different class that is not full.`

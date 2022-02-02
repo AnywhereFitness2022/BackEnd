@@ -5,7 +5,7 @@ const { restrictedForInstructors, checkInstructorValid } = require('./inst-middl
 const makeToken = require('./inst-token-builder')
 
 
-//[GET]/instructors/:inst_id/classes *get all classes held by one specific instructor*
+//[GET] /instructors/:inst_id/classes *get all classes held by one specific instructor*
 router.get('/classes/:inst_id', 
     restrictedForInstructors,
     (req, res, next) => { 
@@ -16,7 +16,7 @@ router.get('/classes/:inst_id',
             .catch(next)
 })
 
-//[GET]/instructors/login *login for instructors only*
+//[GET] /instructors/login *login for instructors only*
 router.post('/login', checkInstructorValid, (req, res, next) => {
     const { password } = req.body
     if(bcrypt.compareSync(password, req.instructorAccountData.password)) {
@@ -34,7 +34,7 @@ router.post('/login', checkInstructorValid, (req, res, next) => {
     next()
 })
 
-//[POST]/:inst_id/create *restricted for instructors to create new class*
+//[POST] /:inst_id/create *restricted for instructors to create new class*
 router.post('/create', restrictedForInstructors, (req, res, next) => { 
     Instructors.createClass(req.body)
         .then(newClass => {
@@ -43,7 +43,9 @@ router.post('/create', restrictedForInstructors, (req, res, next) => {
         .catch(next)
 })
 
-//[DELETE]/delete/class_id *restricted for instructors to delete a class*
+//[PUT] /
+
+//[DELETE] /delete/class_id *restricted for instructors to delete a class*
 router.delete('/delete/:class_id', restrictedForInstructors, (req, res, next) => {
     Instructors.deleteClass(req.params.class_id)
         .then(deleted => {

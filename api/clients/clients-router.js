@@ -6,12 +6,13 @@ const { BCRYPT_ROUNDS } = require('../configs')
 const { 
     checkClientNameValid, 
     clientNameDoExist, 
-    restrictedForClients 
+    restrictedForClients,
+    clientRoleOnly,
 }  = require('./clients-middleware')
 const { checkClassFull } = require('../reservations/res-middleware')
 
 //[GET] / *restricted get all classes*
-router.get('/', restrictedForClients, (req, res, next) => {
+router.get('/', restrictedForClients, clientRoleOnly('client'), (req, res, next) => {
     Clients.getAllClasses()
         .then(allPublicClasses => {
             res.json(allPublicClasses)
@@ -19,18 +20,18 @@ router.get('/', restrictedForClients, (req, res, next) => {
         .catch(next)
 })
 
-//[GET] /class/class_id *restricted get class by class_id*
-router.get('/class/:class_id', restrictedForClients, (req, res, next) => {
+//[GET] /class/:class_id *restricted get class by class_id*
+router.get('/classes/:class_id', restrictedForClients, clientRoleOnly('client'), (req, res, next) => {
     Clients.findClassById(req.params.class_id)
         .then(gettingClass => {
-            console.log(gettingClass);
+            // console.log(gettingClass);
             res.json(gettingClass)
         })
         .catch(next)
 })
 
 //[GET] /:client_id/classes *restricted for clients to retrieve all reserved classes*
-router.get('/:client_id/classes', restrictedForClients, (req, res, next) => {
+router.get('/:client_id/classes', restrictedForClients, clientRoleOnly('client'), (req, res, next) => {
     Clients.getAllReservations(req.params.client_id)
         .then(reservations => {
             res.json(reservations)
@@ -39,7 +40,7 @@ router.get('/:client_id/classes', restrictedForClients, (req, res, next) => {
 })
 
 //[POST] /clients/register *register new clients*
-router.post('/register', clientNameDoExist, (req, res, next) => { //need middlewares for validation for body
+router.post('/register', clientNameDoExist, (req, res, next) => {
     let { username, password } = req.body
     const hash = bcrypt.hashSync(password, BCRYPT_ROUNDS)
     Clients.insertUser({username, password: hash})
@@ -66,7 +67,7 @@ router.post('/login', checkClientNameValid, (req, res, next) => {
 })
 
 //[POST] /add/:class_id *restricted for clients to add a class*
-router.post('/add/:class_id', restrictedForClients, checkClassFull, (req, res, next) => {
+router.post('/add/:class_id', restrictedForClients, checkClassFull, clientRoleOnly('client'), (req, res, next) => {
     const client_id = req.decodedToken.client_id;
     const class_id = req.params.class_id
     
@@ -80,11 +81,11 @@ router.post('/add/:class_id', restrictedForClients, checkClassFull, (req, res, n
 })
 
 //[DELETE] /remove/:class_id
-router.delete('/:client_id/remove/:class_id', (req, res, next) => {
+router.delete('/:client_id/remove/:class_id', restrictedForClients, clientRoleOnly('client'), (req, res, next) => {
     const { client_id, class_id} = req.params
     Clients.removeReservation(client_id, class_id)
         .then(deletedClass => {
-            console.log(deletedClass);
+            // console.log('what is deletedClass after .then()', deletedClass); returns 1 => # of rows affected
             res.json({
                 message: `class has been removed from your reservations`
             })
