@@ -7,7 +7,7 @@ const { checkClientNameValid, clientNameDoExist, restrictedForClients }  = requi
 
 //[GET] / *restricted get all classes*
 router.get('/', restrictedForClients, (req, res, next) => {
-    Clients.getAllClassesPublic()
+    Clients.getAllClasses()
         .then(allPublicClasses => {
             res.json(allPublicClasses)
         })
@@ -76,9 +76,13 @@ router.post('/add/:class_id', restrictedForClients, (req, res, next) => {
 
 //[DELETE] /remove/:class_id
 router.delete('/:client_id/remove/:class_id', (req, res, next) => {
-    Clients.removeReservation(req.params.class_id)
+    const { client_id, class_id} = req.params
+    Clients.removeReservation(client_id, class_id)
         .then(deletedClass => {
-            res.json(deletedClass)
+            console.log(deletedClass);
+            res.json({
+                message: `class has been removed from your reservations`
+            })
         })
         .catch(next)
 })

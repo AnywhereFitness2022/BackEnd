@@ -1,6 +1,6 @@
 const db = require('../data/db-config.js')
 
-function getAllClassesPublic() { 
+function getAllClasses() { 
   return db('classes')
     .select(
       'class_id', 
@@ -33,8 +33,8 @@ async function insertUser(user) {
   return newUserObject
 }
 
-function getAllReservations(client_id){
-  return db('reservations as r')
+async function getAllReservations(client_id){
+  return await db('reservations as r')
       .join('classes as c', 'r.class_id', 'c.class_id')
       .join('clients as cl', 'r.client_id', 'cl.client_id')
       .select(
@@ -81,27 +81,39 @@ async function addReservations(client_id, class_id) {
       .first()
 }
 
+async function getReservedClass(client_id, class_id){
+  const allClasses = await getAllReservations(client_id)
+  console.log('get all classes', allClasses);
+  const oneClass = allClasses.filter(eachClass => {
+    console.log('after filtering', eachClass);
+    return eachClass.class_id === parseInt(class_id)
 
-async function removeReservation(class_id){
-  //delete from reservations where reservations_id = 2
+  })
   
-  const deletedSomething = await db('reservations')
-      .where('class_id', class_id).del()
-      //returns # of rows deleted = 1
-  //once row is success, go & update the total_clients column in classes table where class_id = class_id
-  await db('classes')
-      .where('class_id', class_id)
-      .update('total_clients')
+  return oneClass[0];
+  
+}
 
-  return deletedSomething
+async function removeReservation(client_id,class_id){
+  const whatWeNeedToDelete = await getReservedClass(client_id, class_id)
+  console.log('suppose to be what?', whatWeNeedToDelete);
+    await db('classes')
+      .where('class_id', class_id)
+      .update('total_clients', whatWeNeedToDelete.total_clients -1)
+      
+    return db('reservations')
+      .where('reservations_id', whatWeNeedToDelete.reservations_id)
+      .del()
+  
 }
 
 module.exports = {
-  getAllClassesPublic,
+  getAllClasses,
   findClassById,
   findBy,
   insertUser,
   getAllReservations,
   removeReservation,
-  addReservations
+  addReservations,
+  getReservedClass
 }
