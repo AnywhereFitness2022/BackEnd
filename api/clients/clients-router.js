@@ -20,8 +20,8 @@ router.get('/classes/public', (req, res, next) => {
         .catch(next)
 })
 
-//[GET] / *restricted get all classes*
-router.get('/class', restrictedForClients, clientRoleOnly('client'), (req, res, next) => {
+// [GET] / *restricted get all classes*
+router.get('/classes', restrictedForClients, clientRoleOnly('client'), (req, res, next) => {
     Clients.getAllClasses()
         .then(allClasses => {
             res.json(allClasses)
@@ -54,7 +54,9 @@ router.post('/register', clientNameDoExist, (req, res, next) => {
     const hash = bcrypt.hashSync(password, 8)
     Clients.insertUser({username, password: hash})
         .then(newUser => {
-            res.json(newUser)
+            res.json({
+                message: `Welcome to Anywhere Fitness, ${newUser.username}!`
+            })
         })
         .catch(next)
 })
