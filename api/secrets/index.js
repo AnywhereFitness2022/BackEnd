@@ -1,4 +1,3 @@
 module.exports = {
-    BCRYPT_ROUNDS: '8',
-    JWT_SECRET: 'this is a secret'
+    JWT_SECRET: process.env.JWT_SECRET || 'this is a secret',
 }
