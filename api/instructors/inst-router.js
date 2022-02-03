@@ -39,7 +39,7 @@ router.post('/login', checkInstructorValid, (req, res, next) => {
     next()
 })
 
-//[POST] /:inst_id/create *restricted for instructors to create new class*
+//[POST] /create *restricted for instructors to create new class*
 router.post('/create', 
     restrictedForInstructors, 
     instructorRoleOnly('instructor'), 
