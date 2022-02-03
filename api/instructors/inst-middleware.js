@@ -14,9 +14,10 @@ const restrictedForInstructors = (req, res, next) => {
             if(err) {
                 next({
                     status: 401,
-                    message: 'Token invalid!'
+                    message: err.message
                 })
             } else {
+                console.log('what is req decodedJWT', req.decodedJWT);
                 req.decodedJWT = decoded
                 next()
             }

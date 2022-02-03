@@ -208,10 +208,25 @@ Anywhere Fitness base url: [https://anywhere-fitness-buildweek.herokuapp.com/api
 
 # Instructor’s Log-in Endpoint
 
+## Instructors Log-In Credentials
+
+- use the following instructors credentials to log-in:
+
+```jsx
+{ "username": "PeterParker", "password": "1234" }
+```
+
+```jsx
+{ "username": "WandaVision", "password": "1234" }
+```
+
+```jsx
+{ "username": "TonyStark", "password": "1234" }
+```
+
 [GET]/instructors/login
 
 - restricted endpoint for instructors only
-- **please use the username and password below to log in as an instructor**
 - Takes in req.body with the following format:
 
 ```jsx
