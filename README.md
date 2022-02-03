@@ -331,7 +331,7 @@ Anywhere Fitness base url: [https://anywhere-fitness-buildweek.herokuapp.com/api
 }
 ```
 
-[UPDATE]/instructors/:inst_id/update/:class_id
+[UPDATE]/instructors/update
 
 - restricted endpoint for instructors only
 - instructor can modify a class by the class id
@@ -363,3 +363,9 @@ Anywhere Fitness base url: [https://anywhere-fitness-buildweek.herokuapp.com/api
 - restricted endpoint for instructors only
 - instructor deletes a class by class id
 - will return the following:
+
+```jsx
+{
+	"message": "Class was successfully deleted"
+}
+```
