@@ -269,7 +269,7 @@ Anywhere Fitness base url: [https://anywhere-fitness-buildweek.herokuapp.com/api
 ]
 ```
 
-[POST]/instructors/:inst_id/create
+[POST]/instructors/create
 
 - restricted endpoint for instructors only
 - instructor create a new class
