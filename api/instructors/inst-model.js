@@ -59,7 +59,7 @@ async function deleteClass(class_id){
 }
 
 function updateClass(body){
-    console.log('what is body', body);
+    // console.log('what is body', body);
     // const {class_id} = body
     return db('classes')
         .where('class_id', body.class_id)
