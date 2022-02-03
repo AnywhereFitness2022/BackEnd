@@ -58,9 +58,12 @@ async function deleteClass(class_id){
     return db('classes').where('class_id', class_id).del()
 }
 
-async function updateClass(class_id, body){
-    await db('classes').update(body).where('class_id', class_id)
-    return getClass(body.instructor_id, )
+function updateClass(body){
+    console.log('what is body', body);
+    // const {class_id} = body
+    return db('classes')
+        .where('class_id', body.class_id)
+        .update(body)
 }
 
 module.exports = {

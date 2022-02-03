@@ -29,7 +29,7 @@ router.get('/classes/:class_id', restrictedForInstructors, (req, res, next) => {
         .catch(next)
 })
 
-//[GET] /instructors/login *login for instructors only*
+//[GET] /login *login for instructors only*
 router.post('/login', checkInstructorValid, (req, res, next) => {
     const { password } = req.body
     if(bcrypt.compareSync(password, req.instructorAccountData.password)) {
@@ -61,12 +61,12 @@ router.post('/create',
 })
 
 //[PUT] /:inst_id/update/:class_id *restricted for instructors to update/modify classes*
-router.put('/:inst_id/update/:class_id', (req, res, next) => {
+router.put('/update', (req, res, next) => {
     // res.json({ 
     //     message: 'class was updated'
     // })
 
-    Instructors.updateClass(req.params.class_id, req.body)
+    Instructors.updateClass(req.body)
         .then(updatedClass => {
             // console.log('what is updatedClass', updatedClass);
             res.json({
