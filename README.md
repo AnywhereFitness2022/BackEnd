@@ -334,13 +334,13 @@ Anywhere Fitness base url: [https://anywhere-fitness-buildweek.herokuapp.com/api
 
 ```jsx
 {
-	"class_id": 5,
-	"class_name": "Deep Divin'",
+	"class_id": 12,
+	"class_name": "New Class'",
 	"class_start_time": "06:30:00",
-	"class_type": "Scuba Diving",
+	"class_type": "Newe Class",
 	"class_duration": 180,
 	"class_intensity_level": 10,
-	"class_location": "Key West",
+	"class_location": "New Class",
 	"max_class_size": 50,
 	"instructor_id": 1
 }
@@ -354,14 +354,15 @@ Anywhere Fitness base url: [https://anywhere-fitness-buildweek.herokuapp.com/api
 
 ```jsx
 {
-	"class_name": "Diving With Sharks'",
-	"class_start_time": "02:30",
-	"class_type": "Free Diving",
-	"class_duration": "180",
-	"class_intensity_level": "9",
-	"class_location": "Key Largo",
-	"max_class_size": "4",
-	"instructor_id": "1"
+    "class_id": 12,
+    "class_name": "Updating'",
+    "class_start_time": "06:30:00",
+    "class_type": "Update",
+    "class_duration": 180,
+    "class_intensity_level": 10,
+    "class_location": "Update",
+    "max_class_size": 50,
+    "instructor_id": 1
 }
 ```
 
