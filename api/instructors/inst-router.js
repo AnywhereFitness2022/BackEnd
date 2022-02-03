@@ -10,7 +10,7 @@ const makeToken = require('./inst-token-builder')
 
 
 //[GET] /:inst_id/classes *get all classes by instructor_id*
-router.get('/classes/:inst_id', 
+router.get('/:inst_id/classes/', 
     restrictedForInstructors, instructorRoleOnly('instructor'), 
     (req, res, next) => { 
         Instructors.getAllClasses(req.params.inst_id)
@@ -18,6 +18,15 @@ router.get('/classes/:inst_id',
                 res.json(myClasses)
             })
             .catch(next)
+})
+
+//[GET] /classes/:class_id *restricted for instructors*
+router.get('/classes/:class_id', restrictedForInstructors, (req, res, next) => {
+    Instructors.getClassById(req.params.class_id)
+        .then(aClass => {
+            res.json(aClass)
+        })
+        .catch(next)
 })
 
 //[GET] /instructors/login *login for instructors only*

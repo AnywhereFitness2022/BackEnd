@@ -20,6 +20,10 @@ function getAllClasses(inst_id){
         .orderBy('class_start_time')
 }
 
+function getClassById(class_id){
+    return db('classes').where('class_id', class_id)
+}
+
 async function getClass(inst_id, class_id){
     const allClasses = await getAllClasses(inst_id)
     const oneClass = allClasses.filter(eachClass => {
@@ -65,5 +69,6 @@ module.exports = {
     createClass,
     deleteClass,
     updateClass,
-    getClass
+    getClass,
+    getClassById
 }
