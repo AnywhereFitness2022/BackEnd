@@ -211,6 +211,7 @@ Anywhere Fitness base url: [https://anywhere-fitness-buildweek.herokuapp.com/api
 [GET]/instructors/login
 
 - restricted endpoint for instructors only
+- **please use the username and password below to log in as an instructor**
 - Takes in req.body with the following format:
 
 ```jsx
@@ -224,8 +225,9 @@ Anywhere Fitness base url: [https://anywhere-fitness-buildweek.herokuapp.com/api
     
     ```jsx
     {
-    "message": "Welcome PeterParker! Let's change fitness!",
-    "token": "string"
+        "instructor_id": "1",
+        "message": "Welcome PeterParker! Let's change fitness!",
+        "token": "a string"
     }
     ```
     
@@ -361,9 +363,3 @@ Anywhere Fitness base url: [https://anywhere-fitness-buildweek.herokuapp.com/api
 - restricted endpoint for instructors only
 - instructor deletes a class by class id
 - will return the following:
-
-```jsx
-{
-	"message": "Token is required!"
-}
-```
